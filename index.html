@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login amb Google - Firebase</title>
+
+  <!-- Firebase App (core) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Login amb Google</h1>
+  <button id="loginBtn">Iniciar sessió amb Google</button>
+  <p id="mensaje"></p>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBEeB6PNdhufTT0gvnxdEnXiAOdcpfHDtM",
+      authDomain: "iesbisegur.firebaseapp.com",
+      databaseURL: "https://iesbisegur-default-rtdb.firebaseio.com",
+      projectId: "iesbisegur",
+      storageBucket: "iesbisegur.appspot.com",
+      messagingSenderId: "547257165740",
+      appId: "1:547257165740:web:a47e2fb7ec48d491b13c09"
+    };
+
+    // Inicialització de Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Gestió del botó de login
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          document.getElementById('mensaje').textContent = 'Estàs dins, OK!';
+        })
+        .catch((error) => {
+          console.error(error);
+          alert('Error al iniciar sessió: ' + error.message);
+        });
+    });
+  </script>
+
+</body>
+</html>
