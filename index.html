@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="ca">
 <head>
   <meta charset="UTF-8">
-  <title>Login amb Google - Firebase (v8)</title>
-
-  <!-- Firebase App (core) v8 -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <title>Login amb Google - Firebase v9</title>
 
   <style>
     body { font-family: sans-serif; text-align: center; margin-top: 100px; }
     button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #mensaje { margin-top: 20px; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -19,36 +16,42 @@
   <button id="loginBtn">Iniciar sessió amb Google</button>
   <p id="mensaje"></p>
 
-  <script>
-    // CONFIGURACIÓ Firebase (igual que la teva)
+  <script type="module">
+    // Importar SDKs de Firebase v9
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+    // Configuració de Firebase (reemplaza con la tuya si quieres)
     const firebaseConfig = {
-      apiKey: "AIzaSyCgo2MH48sT9jgSd3DpROR4XE1u7G4OCg0",
-      authDomain: "prova02-b60c5.firebaseapp.com",
-      projectId: "prova02-b60c5",
-      storageBucket: "prova02-b60c5.firebasestorage.app",
-      messagingSenderId: "849436044950",
-      appId: "1:849436044950:web:2de76de79aefc7bab1dcb7",
-      measurementId: "G-PQBN9TB3WE"
+      apiKey: "AIzaSyAb9zaMXS888QxotbMZzA4Vix6_qvrJDhI",
+      authDomain: "prova03-22db9.firebaseapp.com",
+      projectId: "prova03-22db9",
+      storageBucket: "prova03-22db9.appspot.com",
+      messagingSenderId: "120066105498",
+      appId: "1:120066105498:web:2859bec97fbf42d26eff23"
     };
 
-    // Inicialitzar Firebase (v8)
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    // Inicializar Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    // Botó de login
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then((result) => {
-          document.getElementById('mensaje').textContent = 'Estàs dins, OK! Hola, ' + (result.user.displayName || '');
+    // Login con Google
+    const loginBtn = document.getElementById('loginBtn');
+    const mensaje = document.getElementById('mensaje');
+
+    loginBtn.addEventListener('click', () => {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+        .then(result => {
+          const user = result.user;
+          mensaje.textContent = `Estàs dins, OK! Hola, ${user.displayName}`;
         })
-        .catch((error) => {
+        .catch(error => {
           console.error('Auth error:', error);
-          document.getElementById('mensaje').textContent = 'Error: ' + error.message;
+          mensaje.textContent = `Error: ${error.message}`;
         });
     });
   </script>
 
 </body>
 </html>
-
