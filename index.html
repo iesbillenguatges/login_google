@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login amb Google - Firebase (v8)</title>
+
+  <!-- Firebase App (core) v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 100px; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #mensaje { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>Login amb Google</h1>
+  <button id="loginBtn">Iniciar sessió amb Google</button>
+  <p id="mensaje"></p>
+
+  <script>
+    // Configuración de Firebase v8
+    var firebaseConfig = {
+      apiKey: "AIzaSyAtk5yELBQ19E_azHc3YoN2Rq2Di2VtwaE",
+      authDomain: "prova05-c58d3.firebaseapp.com",
+      projectId: "prova05-c58d3",
+      storageBucket: "prova05-c58d3.appspot.com",
+      messagingSenderId: "1096447019862",
+      appId: "1:1096447019862:web:beba883ea08eb5ae3ce4f7"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    var auth = firebase.auth();
+
+    // Login con Google
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(function(result) {
+          document.getElementById('mensaje').textContent =
+            'Estàs dins, OK! Hola, ' + (result.user.displayName || '');
+        })
+        .catch(function(error) {
+          console.error('Auth error:', error);
+          document.getElementById('mensaje').textContent = 'Error: ' + error.message;
+        });
+    });
+  </script>
+
+</body>
+</html>
+
