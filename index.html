@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Login amb Google - Firebase v9</title>
+  <title>Login amb Google - Firebase (v8)</title>
+
+  <!-- Firebase App (core) v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
   <style>
     body { font-family: sans-serif; text-align: center; margin-top: 100px; }
     button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-    #mensaje { margin-top: 20px; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -16,13 +19,9 @@
   <button id="loginBtn">Iniciar sessió amb Google</button>
   <p id="mensaje"></p>
 
-  <script type="module">
-    // Importar SDKs de Firebase v9
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
-    // Configuració de Firebase (reemplaza con la tuya si quieres)
-    const firebaseConfig = {
+  <script>
+    // Configuració de Firebase
+    var firebaseConfig = {
       apiKey: "AIzaSyAb9zaMXS888QxotbMZzA4Vix6_qvrJDhI",
       authDomain: "prova03-22db9.firebaseapp.com",
       projectId: "prova03-22db9",
@@ -31,24 +30,20 @@
       appId: "1:120066105498:web:2859bec97fbf42d26eff23"
     };
 
-    // Inicializar Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    // Inicialitzar Firebase
+    firebase.initializeApp(firebaseConfig);
+    var auth = firebase.auth();
 
-    // Login con Google
-    const loginBtn = document.getElementById('loginBtn');
-    const mensaje = document.getElementById('mensaje');
-
-    loginBtn.addEventListener('click', () => {
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider)
-        .then(result => {
-          const user = result.user;
-          mensaje.textContent = `Estàs dins, OK! Hola, ${user.displayName}`;
+    // Botó de login
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(function(result) {
+          document.getElementById('mensaje').textContent = 'Estàs dins, OK! Hola, ' + (result.user.displayName || '');
         })
-        .catch(error => {
+        .catch(function(error) {
           console.error('Auth error:', error);
-          mensaje.textContent = `Error: ${error.message}`;
+          document.getElementById('mensaje').textContent = 'Error: ' + error.message;
         });
     });
   </script>
