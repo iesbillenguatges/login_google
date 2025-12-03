@@ -11,7 +11,7 @@ Aplicació web senzilla que permet iniciar sessió amb un compte de **Google** m
 ## Tecnologies
 
 - HTML5, CSS3, JavaScript
-- Firebase Authentication (versió 8.x)
+- Firebase Authentication
 
 ## Com executar
 
